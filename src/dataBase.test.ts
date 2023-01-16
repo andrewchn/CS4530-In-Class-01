@@ -96,7 +96,14 @@ describe('tests for adding grade to existing student', () => {
   });
 
   test('adding coursegrade is accurately populated in the transcript to the right student', () => {
-    
+    const sid1:StudentID = db.addStudent('bob');
+    const newCourse1:Course = 'english'
+    const newCourseGrade1:CourseGrade = {course:newCourse1, grade:100}
+
+    db.addGrade(sid1, newCourse1, newCourseGrade1);
+
+    const transcript:Transcript = db.getTranscript(sid1);
+    expect(transcript.grades[0].grade).toEqual(100);
   })
 
   test('Throws error if grade is not >= 0 and <= 100', () => {
