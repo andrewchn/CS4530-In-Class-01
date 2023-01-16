@@ -96,19 +96,35 @@ describe('tests for adding grade to existing student', () => {
   });
 
   test('adding coursegrade is accurately populated in the transcript to the right student', () => {
-
+    
   })
 
-  test('check that grade is valid', () => {
+  test('Throws error if grade is not >= 0 and <= 100', () => {
+    const sid1:StudentID = db.addStudent('bob');
+    const newCourse1:Course = 'english';
+    const newCourseGrade1:CourseGrade = {course:newCourse1, grade:101};
     
+    expect(() => db.addGrade(sid1, newCourse1, newCourseGrade1)).toThrowError()
+
+    const newCourse2:Course = 'math';
+    const newCourseGrade2:CourseGrade = {course:newCourse2, grade:-1};
+
+    expect(() => db.addGrade(sid1, newCourse2, newCourseGrade2)).toThrowError()
+
+    const newCourse3:Course = 'history';
+    const newCourseGrade3:CourseGrade = {course:newCourse3, grade:50};
+    db.addGrade(sid1, newCourse3, newCourseGrade3);
+
+    const transcript:Transcript = db.getTranscript(sid1);
+    expect(transcript.grades[0].grade).toEqual(50);
   }) ;
 
   test('adding grade for course that already exist should update grade for that class, not create new entry', () => {
 
   });
 
-  test('course name matches the Course object name, else throws error') {
+  test('course name matches the Course object name, else throws error', () => {
     
-  }
-}) 
+  });
+})
 
