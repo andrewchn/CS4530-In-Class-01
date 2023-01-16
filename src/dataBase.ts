@@ -65,6 +65,13 @@ export default class DataBase implements IDataBase {
         for (let i = 0; i < this.transcripts.length; i++) {
             const curr:Transcript = this.transcripts[i];
             if (curr.student.studentID === id) {
+                for (let j = 0; j < curr.grades.length; j++) {
+                    const currCourse = curr.grades[j];
+                    if (currCourse.course === course) {
+                        currCourse.grade = courseGrade.grade;
+                        return;
+                    } 
+                }
                 curr.grades.push(courseGrade);
                 return;
             }
