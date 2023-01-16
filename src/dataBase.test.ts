@@ -137,7 +137,18 @@ describe('tests for adding grade to existing student', () => {
   });
 
   test('course name matches the Course object name, else throws error', () => {
-    
+    const sid1:StudentID = db.addStudent('bob');
+    const newCourse:Course = 'english';
+    const newCourse1:Course = 'math';
+    const newCourseGrade1:CourseGrade = {course:newCourse1, grade:100};
+
+    expect(() => db.addGrade(sid1, newCourse, newCourseGrade1)).toThrowError()
+
+    const newCourseGrade2:CourseGrade = {course:newCourse1, grade:20};
+    db.addGrade(sid1, newCourse1, newCourseGrade1);
+
+    const transcript:Transcript = db.getTranscript(sid1);
+    expect(transcript.grades[0].course).toEqual(newCourse1)
   });
 })
 
