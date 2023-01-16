@@ -107,5 +107,8 @@ describe('tests for adding grade to existing student', () => {
 
   });
 
+  test('course name matches the Course object name, else throws error') {
+    
+  }
 }) 
 

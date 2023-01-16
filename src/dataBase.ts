@@ -56,6 +56,9 @@ export default class DataBase implements IDataBase {
     }   // hmm, what to do about errors??
 
     addGrade (id: StudentID, course: Course, courseGrade: CourseGrade) : void {
+        if (course !== courseGrade.course) {
+            throw new Error("course name does not match");
+        }
         if (courseGrade.grade < 0 || courseGrade.grade > 100) {
             throw new Error("invalid grade");
         }
