@@ -120,7 +120,20 @@ describe('tests for adding grade to existing student', () => {
   }) ;
 
   test('adding grade for course that already exist should update grade for that class, not create new entry', () => {
+    const sid1:StudentID = db.addStudent('bob');
+    const newCourse:Course = 'english';
+    const newCourseGrade1:CourseGrade = {course:newCourse, grade:100};
 
+    db.addGrade(sid1, newCourse, newCourseGrade1)
+    
+    const transcript:Transcript = db.getTranscript(sid1);
+    expect(transcript.grades[0].grade).toEqual(100)
+
+    const newCourseGrade2:CourseGrade = {course:newCourse, grade:2};
+
+    db.addGrade(sid1, newCourse, newCourseGrade2)
+
+    expect(transcript.grades[0].grade).toEqual(2)
   });
 
   test('course name matches the Course object name, else throws error', () => {
